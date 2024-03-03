@@ -43,7 +43,7 @@
                 left:0px;
                 right:0px;
                 bottom:0px;
-                background-color: white;
+                background-color: black;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -51,9 +51,12 @@
 
             #boxload{
                 display: flex;
-                
+                align-items: center;
                 justify-content: center;
               width: 90%;
+              height: 300px;
+              background-color: #fff;
+              border-radius: 50px;
         
             }
             #barraload{
@@ -63,12 +66,12 @@
             
             }
             #background1{
-                height: 38px;
+                height: 36px;
                 width: 100px;
-                background-color: #1f1e1e;
+                background-color: #00ff80;
                 animation-name: loadding;
                 animation-delay: 0ms;
-                animation-duration: 8s;
+                animation-duration: 6s;
                 animation-iteration-count: infinite;
             }
             @keyframes loadding{
@@ -904,10 +907,15 @@
         .barra{
             width: 80%;
             height: 40px;
-            background-color: red;
-            border: solid 2px #000;
+            background-color: rgb(209, 208, 208);
+            border: solid 2px #333333;
             border-radius: 5px;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            font-size: 30px;
+            
+            
         }
     
     
@@ -919,32 +927,37 @@
     
 </head>
 <div id="loadding">
-    <div id="boxload">
+    <div id="boxload" style="flex-direction: column;">
         <div id="barraload">
-        <div id="background1"></div>
+        <div id="background1"><a href="" id="recarregar" style="display: none; text-decoration: none;color:rgb(0, 119, 255);" >RECARREGAR</a></div>
         </div>
-
+        <!--Um momento-->
     </div>
 
 </div>
 <script>
     function listo(){
-        document.getElementById('loadding').style.display="none";
+        setTimeout(() => {
+            document.getElementById('loadding').style.display="none";
+        }, 6000);
+        
     }
 
     function erroimg(){
             var L = document.getElementById("loadding");
             var L1 = document.getElementById("background1");
             var L2 = document.getElementById("barraload");
+            var L3 = document.getElementById("recarregar");
             setTimeout(() => {
                 L.style.display = 'flex';
                 L1.removeAttribute('id','background1')
                 L1.setAttribute('class','barckgrond1')
                 L2.classList.add('barra');
+                L3.style.display='flex';
                 
                 
-            alert('funciona')
-            }, 5000);
+            alert('Erro! as imagens não estão carregando, tente recarregar a pagina.')
+            }, 12000);
             
         }
     
