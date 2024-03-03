@@ -941,7 +941,10 @@
             document.getElementById('loadding').style.display="none";
            var L4 = document.getElementById('textloadding');
            L4.style.opacity = 0;
-           L4.style.display = none;
+           L4.style.display ='none';
+           logoBottom.style.opacity=1
+        
+    
 
         }, 6000);
         
@@ -1448,9 +1451,7 @@ function sound(){
         btnvideo = document.getElementById("btnVideo");
         logoBottom = document.getElementById("logobottom");
         
-        setTimeout(() => {
-        logoBottom.style.opacity=1
-    }, 15000);
+        
 
         s(".renovation").addEventListener('click', ()=>{
             if(s(".window").classList.contains("Open")==true){
@@ -2011,7 +2012,7 @@ function startCurso(){
                 Req.style.display = "none";
             }, 0);
             //-----------------------------------------------------------------------------//
-                
+              
 
                 if(Midia.classList.contains("container")==false){
                     Midia.classList.add("container");
