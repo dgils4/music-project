@@ -37,6 +37,51 @@
                         overflow-x: clip;
             }
 
+            #loadding{
+                position:fixed;
+                top:0px;
+                left:0px;
+                right:0px;
+                bottom:0px;
+                background-color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #boxload{
+                display: flex;
+                
+                justify-content: center;
+              width: 90%;
+        
+            }
+            #barraload{
+                width: 80%;
+                height: 40px;
+                border: solid black 2px;
+            
+            }
+            #background1{
+                height: 38px;
+                width: 100px;
+                background-color: #1f1e1e;
+                animation-name: loadding;
+                animation-delay: 0ms;
+                animation-duration: 8s;
+                animation-iteration-count: infinite;
+            }
+            @keyframes loadding{
+                0%{width: 0px;}
+                5%{width: 5%;}
+                20%{width: 20%;}
+                50%{width: 50%;}
+                60%{width: 50%;}
+                80%{width: 70%;}
+                90%{width: 90%;}
+                100%{width: 100%;}
+            }
+
                 .textDisplay{
                     display: none;
                 }
@@ -855,6 +900,15 @@
             display: none;
             
         }
+
+        .barra{
+            width: 80%;
+            height: 40px;
+            background-color: red;
+            border: solid 2px #000;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     
     
     
@@ -864,7 +918,39 @@
     </style>
     
 </head>
-<body id="body">
+<div id="loadding">
+    <div id="boxload">
+        <div id="barraload">
+        <div id="background1"></div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    function listo(){
+        document.getElementById('loadding').style.display="none";
+    }
+
+    function erroimg(){
+            var L = document.getElementById("loadding");
+            var L1 = document.getElementById("background1");
+            var L2 = document.getElementById("barraload");
+            setTimeout(() => {
+                L.style.display = 'flex';
+                L1.removeAttribute('id','background1')
+                L1.setAttribute('class','barckgrond1')
+                L2.classList.add('barra');
+                
+                
+            alert('funciona')
+            }, 5000);
+            
+        }
+    
+</script>
+
+<body id="body" onload="listo()">
     <div class="NoSuported">
         <div class="textDisplay">Display não Suportado.</div>
         </div>
@@ -939,7 +1025,7 @@
     
 <div class="alinhamento" style="width: 100%; height: 300px; display: flex; justify-content: center; flex-direction: column;align-items: center; margin-bottom: 20px;">
 
-        <div style="height: 200px;"><div onclick="song1()" id="logo"><img id="ImgLogoNone" style="width: 180px;" src="Imagens/Logo.png" onerror="alert('nao estamos conseguindo carregar a imagem')" alt=""><div id="miniMenu">
+        <div style="height: 200px;"><div onclick="song1()" id="logo"><img id="ImgLogoNone" style="width: 180px;" src="Imagens/Logo.png" onerror="erroimg()" alt=""><div id="miniMenu">
             
             <div style="font-size: 20px; text-align: center; color:white">Ligar apresentação<br>automática?</div>
             <div style="display: flex;justify-content: center;">
@@ -1022,7 +1108,7 @@
                     </tr>
 
                     <tr>
-                        <td>1 Ano</td>
+                        <td>6 Meses</td>
                          
                            
                     </tr>
@@ -1035,7 +1121,7 @@
                     </tr>
 
                     <tr>
-                        <td>Você recebe uma apostila gratuita<br> </td>
+                        <td>Você terá acesso a uma apostila<br> </td>
                     </tr>
                     <tr>
                         <td>Ficando somente a pasta catalógo <br>por conta do aluno<br> </td>
@@ -1150,16 +1236,26 @@
                 </div>
                 <div id="mover">- Mover -</div>
                 <div id="sub">
-                <img  onclick="myFunction(this),sound()" class="Foto" src="Imagens/img0.jpg" >
-                <img onclick="myFunction(this),sound()" class="Foto" src="Imagens/img2.jpg" >
-                <a href="#pulo"><img onclick="myFunction(this),sound()" class="Foto" src="Imagens/img3.jpg"></a>
-                <img onclick="myFunction(this),sound();" class="Foto" src="Imagens/img4.jpg" >
-                <a href="#pulo2"><img id="pulo" onclick="myFunction(this),sound();" class="Foto" src="Imagens/img5.jpg" ></a>
-                <img onclick="myFunction(this),sound()" class="Foto" src="Imagens/img6.jpg" >
-                <a href="#pulo3"><img id="pulo2" onclick="myFunction(this),sound()" class="Foto" src="Imagens/img7.jpg" ></a>
-                <img onclick="myFunction(this),sound()" class="Foto" src="Imagens/img9.jpg" >
-                <a href="#pulo4"><img  id="pulo3" onclick="myFunction(this);sound()" class="Foto" src="Imagens/img10.jpg" ></a>
-                <img id="pulo4" onclick="myFunction(this);sound()" class="Foto" src="Imagens/img11.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img0.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img2.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img3.jpg">
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img4.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img5.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img6.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img7.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img9.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img10.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img11.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img12.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img13.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img14.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img15.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img16.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img17.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img18.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img19.jpg" >
+                <img onclick="myFunction(this);sound()" class="Foto" src="Imagens/img20.jpg" >
+                
             </div>
 
             <div id="exapandedClose">
@@ -1354,6 +1450,8 @@ function sound(){
 
               
         }
+
+        
 
 
         function termoAceito(){
