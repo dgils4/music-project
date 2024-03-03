@@ -460,7 +460,7 @@
                 width: 32%;
                 height:170px;
                 margin-left: 20px;
-                animation: logoIna 3s ease-in-out 0ms infinite alternate;
+                animation: logoIna 3s ease-in-out 10s infinite alternate;
                 
             }
 
@@ -931,7 +931,7 @@
         <div id="barraload">
         <div id="background1"><a href="" id="recarregar" style="display: none; text-decoration: none;color:rgb(0, 119, 255);" >RECARREGAR</a></div>
         </div>
-        <!--Um momento-->
+        <div id="textloadding" style="margin-top: 10px;">Um momento...</div>
     </div>
 
 </div>
@@ -939,6 +939,10 @@
     function listo(){
         setTimeout(() => {
             document.getElementById('loadding').style.display="none";
+           var L4 = document.getElementById('textloadding');
+           L4.style.opacity = 0;
+           L4.style.display = none;
+
         }, 6000);
         
     }
@@ -957,7 +961,7 @@
                 
                 
             alert('Erro! as imagens não estão carregando, tente recarregar a pagina.')
-            }, 12000);
+            }, 20000);
             
         }
     
@@ -1338,7 +1342,7 @@
 </svg>
   <footer id="foot">
         
-        <img id="logobottom" src="Imagens/Logo2.png" class="logoIna" ></img>
+        <img id="logobottom" src="Imagens/Logo2.png" class="logoIna" style="opacity: 0;"></img>
         <div class="Infor">
             <a class="footerInf1" onclick="abrir()">Institucional</a>
             <a class="footerInf" onclick="abrir()">Quem Somos</a>
@@ -1348,6 +1352,7 @@
         </div>
         
     </footer>
+    
 
 
     <div style="height: 3000px;
@@ -1443,7 +1448,9 @@ function sound(){
         btnvideo = document.getElementById("btnVideo");
         logoBottom = document.getElementById("logobottom");
         
-
+        setTimeout(() => {
+        logoBottom.style.opacity=1
+    }, 15000);
 
         s(".renovation").addEventListener('click', ()=>{
             if(s(".window").classList.contains("Open")==true){
