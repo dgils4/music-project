@@ -61,7 +61,7 @@ button {
 
 <script>
 const supabaseUrl = "https://cdechrtprerblmhllqav.supabase.co";
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZWNocnRwcmVyYmxtaGxscWF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjc3MjMsImV4cCI6MjA5MTYwMzcyM30.m-RFl-dDWFsjbWqSZw-y0BDqnpHX5hMH8Z361MCT_Rk";
+const supabaseKey="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZWNocnRwcmVyYmxtaGxscWF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjc3MjMsImV4cCI6MjA5MTYwMzcyM30.m-RFl-dDWFsjbWqSZw-y0BDqnpHX5hMH8Z361MCT_Rk";
 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
@@ -75,32 +75,36 @@ async function buscar() {
         return;
     }
 
-    let { data, error } = await supabaseClient
-        .from('resultados')
-        .select('*')
-        .ilike('nome', nome); // busca ignorando maiúscula/minúscula
+    try {
+        let { data, error } = await supabaseClient
+            .from('resultados')
+            .select('*')
+            .ilike('nome', `%${nome}%`); // 🔥 CORRIGIDO
 
-    if (error) {
-        document.getElementById("resultado").innerHTML = "Erro ao buscar.";
-        console.log(error);
-        return;
+        if (error) {
+            throw error;
+        }
+
+        if (!data || data.length === 0) {
+            document.getElementById("resultado").innerHTML = "❌ Nenhum resultado encontrado.";
+            return;
+        }
+
+        let html = "";
+
+        data.forEach(r => {
+            html += `
+                🎯 Pontos: ${r.pontos}<br>
+                🔐 Código: ${r.codigo}<br><br>
+            `;
+        });
+
+        document.getElementById("resultado").innerHTML = html;
+
+    } catch (e) {
+        console.log(e);
+        document.getElementById("resultado").innerHTML = "❌ Erro ao buscar dados.";
     }
-
-    if (data.length === 0) {
-        document.getElementById("resultado").innerHTML = "❌ Nenhum resultado encontrado.";
-        return;
-    }
-
-    let html = "";
-
-    data.forEach(r => {
-        html += `
-            🎯 Pontos: ${r.pontos}<br>
-            🔐 Código: ${r.codigo}<br><br>
-        `;
-    });
-
-    document.getElementById("resultado").innerHTML = html;
 }
 </script>
 
