@@ -35,18 +35,76 @@ button {
     text-align: center;
     font-size: 18px;
 }
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10,15,28,0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-box {
+    background: #111827;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 300px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.popup-box h2 {
+    color: #4F95D6;
+    margin-bottom: 10px;
+}
+
+.popup-box p {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.popup-box button {
+    padding: 10px 20px;
+    background: #1E40AF;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
 </style>
 </head>
 
 <body>
+  <div id="popup" class="popup">
+  <div class="popup-box">
+    <h2>⚠️ Atenção</h2>
+    <p>Este quiz só poderá ser realizado <b>uma única vez</b>.<br><br>
+    Responda com atenção antes de finalizar<br><br>
+Este desafio é uma oportunidade de crescimento espiritual.
+Seja honesto em suas respostas.
+Não tente “burlar” o sistema — o verdadeiro valor está no aprendizado, não na pontuação..</p>
+
+    <button onclick="fecharPopup()">Entendi</button>
+  </div>
+</div>
+  
+  
+  
 <div class="container" id="app">
 
-<h1>Quiz Bíblico e Igreja</h1>
+<h1>Quiz Bíblico Desafios da Fé (ina)</h1>
 
 <div id="quiz"></div>
 
 <button onclick="calcular()">Ver Resultado</button>
 <button id="btnShare" style="display:none;" onclick="compartilhar()">Compartilhar no WhatsApp</button>
+
+<button id="btnSair" style="display:none;" onclick="sair()">Sair</button>
 
 <div class="resultado" id="resultado"></div>
 
@@ -55,8 +113,16 @@ button {
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
+  
+  function sair() {
+    location.reload();
+}
+  
+  
 const supabaseUrl = "https://cdechrtprerblmhllqav.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZWNocnRwcmVyYmxtaGxscWF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjc3MjMsImV4cCI6MjA5MTYwMzcyM30.m-RFl-dDWFsjbWqSZw-y0BDqnpHX5hMH8Z361MCT_Rk";
+
+
 
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 </script>
@@ -105,14 +171,23 @@ const perguntas = [
 ["A Igreja Nova Apostólica foi organizada em qual país?", ["Brasil","França","Alemanha","EUA"], 2],
 ["Em que ano foi organizada?", ["1800","1863","1900","2000"], 1],
 ["Quais são os 3 sacramentos?", ["Batismo, Ceia e Selamento","Oração, Jejum e Fé","Amor, Paz e Alegria","Lei, Graça e Fé"], 0],
-["Quem é o Apóstolo-Mor?", ["Pedro","Jean-Luc Schneider","Paulo","João"], 1],
+["Quem é o Apóstolo-Maior?", ["Pedro","Jean-Luc Schneider","Paulo","João"], 1],
 ["O batismo representa?", ["Tradição","Novo nascimento","Festa","Regra"], 1],
 
 ["Jesus ressuscitou em quantos dias?", ["1","2","3","7"], 2],
 ["Qual livro fala da criação?", ["Mateus","Gênesis","Apocalipse","Salmos"], 1],
 ["Quem abriu o mar?", ["Abraão","Moisés","Davi","José"], 1],
 ["Primeiro milagre de Jesus?", ["Curar cego","Água em vinho","Multiplicar pão","Andar na água"], 1],
-["O que é fé verdadeira?", ["Só acreditar","Acreditar e agir","Ir à igreja","Cantar"], 1],
+["O que é fé verdadeira?", ["Só acreditar","Acreditar e agir","Ir à igreja","Cantar"], 1], ["Quem foi lançado na cova dos leões?", ["Davi","Daniel","José","Elias"], 1],
+["Quem construiu a arca?", ["Abraão","Moisés","Noé","Isaías"], 2],
+["Qual foi o primeiro livro da Bíblia?", ["Êxodo","Salmos","Gênesis","Mateus"], 2],
+["Quem derrotou Golias?", ["Saul","Davi","Sansão","Josué"], 1],
+["Quem foi vendido pelos próprios irmãos?", ["José","Jacó","Davi","Elias"], 0],
+["Qual discípulo andou sobre as águas com Jesus?", ["João","Pedro","Tiago","Mateus"], 1],
+["Quem recebeu os 10 mandamentos?", ["Abraão","Moisés","Davi","Noé"], 1],
+["Qual era o nome da mãe de Jesus?", ["Maria","Marta","Ana","Sara"], 0],
+["Quem subiu ao céu em um redemoinho?", ["Elias","Eliseu","Isaías","Jeremias"], 0],
+["O que Jesus disse ser o maior mandamento?", ["Guardar o sábado","Amar a Deus","Jejuar","Dar ofertas"], 1],
 ];
 
 // GERAR QUIZ
@@ -129,6 +204,7 @@ document.getElementById("quiz").innerHTML = html;
 // CALCULAR RESULTADO
 let resultadoTexto = "";
 
+
 async function calcular() {
     let nome = prompt("Digite seu nome:");
     if (!nome) {
@@ -137,24 +213,47 @@ async function calcular() {
     }
 
     let pontos = 0;
+    let detalhes = "";
 
     for (let i = 0; i < perguntas.length; i++) {
         let r = document.querySelector(`input[name="q${i}"]:checked`);
+
         if (!r) {
             alert("Responda todas!");
             return;
         }
-        if (parseInt(r.value) === perguntas[i][2]) pontos++;
+
+        let respostaUsuario = parseInt(r.value);
+        let respostaCorreta = perguntas[i][2];
+        let textoPergunta = perguntas[i][0];
+        let opcoes = perguntas[i][1];
+
+        if (respostaUsuario === respostaCorreta) {
+            pontos++;
+            detalhes += `
+                <p style="color: #22c55e;">
+                ✔️ ${i+1}. ${textoPergunta}<br>
+                Sua resposta: ${opcoes[respostaUsuario]}
+                </p>
+            `;
+        } else {
+            detalhes += `
+                <p style="color: #ef4444;">
+                ❌ ${i+1}. ${textoPergunta}<br>
+                Sua resposta: ${opcoes[respostaUsuario]}<br>
+                Resposta correta: ${opcoes[respostaCorreta]}
+                </p>
+            `;
+        }
     }
 
     let codigo = Math.random().toString(36).substring(2, 8).toUpperCase();
 
     resultadoTexto = `Resultado: ${pontos}/20\nCódigo: ${codigo}`;
 
-    // 🔥 SALVAR CERTO
     try {
         await supabaseClient
-          .from('resultados') // CORRIGIDO
+          .from('resultados')
           .insert([
             {
               nome: nome,
@@ -167,9 +266,16 @@ async function calcular() {
     }
 
     document.getElementById("resultado").innerHTML = `
-        🎯 Você acertou ${pontos} de 20<br>
+        <h3>🎯 Você acertou ${pontos} de ${perguntas.length}</h3>
         🔐 Código: <b>${codigo}</b>
+        <hr>
+        <div style="text-align:left;">${detalhes}</div>
     `;
+// Esconde botão de resultado
+document.querySelector("button[onclick='calcular()']").style.display = "none";
+
+// Mostra botão sair
+document.getElementById("btnSair").style.display = "block";
 
     document.querySelectorAll("input").forEach(el => el.disabled = true);
 
@@ -177,7 +283,7 @@ async function calcular() {
 
     document.getElementById("btnShare").style.display = "block";
 }
-  
+ 
   
   
 
@@ -186,7 +292,15 @@ function compartilhar() {
     let url = "https://wa.me/?text=" + encodeURIComponent(resultadoTexto);
     window.open(url, "_blank");
 }
-
+function fecharPopup() {
+    document.getElementById("popup").style.display = "none";
+}
+if (!localStorage.getItem("popupVisto")) {
+    document.getElementById("popup").style.display = "flex";
+    localStorage.setItem("popupVisto", "true");
+} else {
+    document.getElementById("popup").style.display = "none";
+}
 
 </script>
 
