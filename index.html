@@ -326,15 +326,27 @@ function fecharPopup() {
     document.getElementById("popup").style.display = "none";
 }
 function mostrarResultado() {
+    // 1. Esconde o botão de resultado
+    
 
-    // Lógica para descer a tela
+    // 2. Desce a tela para mostrar que o resultado apareceu
     setTimeout(() => {
         window.scrollTo({
             top: document.body.scrollHeight,
             behavior: 'smooth'
         });
-    }, 100); // Um pequeno delay de 100ms ajuda a garantir que o conteúdo novo já apareceu
+
+        // 3. Após descer, espera 2 segundos e volta para o topo
+        setTimeout(() => {
+            window.scrollTo({
+                top:4300,
+                behavior: 'smooth'
+            });
+        }, 2000); // Tempo que ele fica lá embaixo antes de subir
+
+    }, 100); // Pequeno delay para o navegador processar a nova altura da página
 }
+
 
  
 
