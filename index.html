@@ -83,7 +83,7 @@ button {
   height: 100%;
   
   
-  background-color: red;
+  
 }
 img{
   width: 100%;
@@ -127,6 +127,13 @@ Não tente “burlar” o sistema — o verdadeiro valor está no aprendizado, n
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <script>
+  
+const audioClick = new Audio("Audio/notifica.mp3"); // coloca o nome do seu arquivo aqui
+
+function tocarAudio() {
+    audioClick.currentTime = 0; // reinicia rápido se clicar várias vezes
+    audioClick.play();
+}
   
   function sair() {
     location.reload();
@@ -208,9 +215,11 @@ const perguntas = [
 let html = "";
 perguntas.forEach((p, i) => {
     html += `<div class="pergunta"><p>${i+1}. ${p[0]}</p>`;
-    ["A","B","C","D"].forEach((l, j) => {
-        html += `<label><input type="radio" name="q${i}" value="${j}"> ${l}) ${p[1][j]}</label><br>`;
-    });
+    ["A","B","C","D"].forEach((l, j) => {html += `<label>
+<input type="radio" name="q${i}" value="${j}" onclick="tocarAudio()">
+${l}) ${p[1][j]}
+</label><br>`;
+});
     html += `</div>`;
 });
 document.getElementById("quiz").innerHTML = html;
