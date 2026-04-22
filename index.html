@@ -115,7 +115,7 @@ Não tente “burlar” o sistema — o verdadeiro valor está no aprendizado, n
 
 <div id="quiz"></div>
 
-<button onclick="calcular()">Ver Resultado</button>
+<button  onclick="calcular()">Ver Resultado</button>
 <button id="btnShare" style="display:none;" onclick="compartilhar()">Compartilhar no WhatsApp</button>
 
 <button id="btnSair" style="display:none;" onclick="sair()">Sair</button>
@@ -271,6 +271,7 @@ async function calcular() {
                 </p>
             `;
         }
+
     }
 
     let codigo = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -299,15 +300,18 @@ async function calcular() {
     `;
 // Esconde botão de resultado
 document.querySelector("button[onclick='calcular()']").style.display = "none";
-
 // Mostra botão sair
 document.getElementById("btnSair").style.display = "block";
+
+mostrarResultado();
 
     document.querySelectorAll("input").forEach(el => el.disabled = true);
 
     localStorage.setItem("quizFinalizado", "true");
 
     document.getElementById("btnShare").style.display = "block";
+    
+    
 }
  
   
@@ -321,6 +325,17 @@ function compartilhar() {
 function fecharPopup() {
     document.getElementById("popup").style.display = "none";
 }
+function mostrarResultado() {
+
+    // Lógica para descer a tela
+    setTimeout(() => {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }, 100); // Um pequeno delay de 100ms ajuda a garantir que o conteúdo novo já apareceu
+}
+
  
 
 </script>
