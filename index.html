@@ -157,7 +157,7 @@ if (localStorage.getItem("quizFinalizado")) {
         <h2 id="titulo">⚠️ Você já respondeu o quiz!</h2>
         <p>Não é permitido refazer.</p>
     `;
-
+document.getElementById("popup").style.display = "flex";
     // AGORA adiciona o evento
     let cliques = 0;
 
@@ -318,12 +318,7 @@ function compartilhar() {
 function fecharPopup() {
     document.getElementById("popup").style.display = "none";
 }
-if (!localStorage.getItem("popupVisto")) {
-    document.getElementById("popup").style.display = "flex";
-    localStorage.setItem("popupVisto", "true");
-} else {
-    document.getElementById("popup").style.display = "none";
-}
+ 
 
 </script>
 
