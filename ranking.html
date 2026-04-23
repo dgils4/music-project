@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ranking Quiz</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #0a0f1c;
+    color: white;
+  
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background: #1e40af;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    
+}
+
+.card {
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+</style>
+
+</head>
+
+<body>
+  
+
+<div class="container">
+
+<h1>🏆 Ranking do Quiz</h1>
+
+<button onclick="verRanking()">Ver Ranking</button>
+
+<div id="ranking"></div>
+
+</div>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<script>
+const supabaseUrl = "https://cdechrtprerblmhllqav.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkZWNocnRwcmVyYmxtaGxscWF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwMjc3MjMsImV4cCI6MjA5MTYwMzcyM30.m-RFl-dDWFsjbWqSZw-y0BDqnpHX5hMH8Z361MCT_Rk";
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+
+
+
+// FUNÇÃO RANKING
+async function verRanking() {
+  
+  
+   const { data, error } = await supabaseClient
+        .from('resultados')
+        .select('nome, pontos')
+        .order('pontos', { ascending: false })
+        .limit(20);
+
+    if (error) {
+        alert("Erro ao carregar ranking");
+        console.log(error);
+        return;
+    }
+
+   let html = `
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h3>🏆 Ranking</h3>
+        <button onclick="fecharRanking()" style="
+            width:auto;
+            padding:6px 10px;
+            background:red;
+            border-radius:6px;
+        ">❌</button>
+    </div>
+`;
+    
+    
+
+    data.forEach((item, index) => {
+
+        let cor = "#111827";
+        let medalha = "";
+        let destaque = "";
+        let textoCor = "white";
+
+        if (index === 0) {
+            cor = "#FFD700";
+            medalha = "🥇";
+            destaque = "font-size:18px; font-weight:bold;";
+            textoCor = "black";
+        } 
+        else if (index === 1) {
+            cor = "#C0C0C0";
+            medalha = "🥈";
+            destaque = "font-size:17px; font-weight:bold;";
+            textoCor = "black";
+        } 
+        else if (index === 2) {
+            cor = "#CD7F32";
+            medalha = "🥉";
+            destaque = "font-size:16px; font-weight:bold;";
+            textoCor = "black";
+        }
+
+        html += `
+            <div class="card" style="
+                background:${cor};
+                color:${textoCor};
+                ${destaque}
+            ">
+                <span>
+                    ${medalha ? medalha : "🏅"} ${index + 1}º - ${item.nome}
+                </span>
+
+                <span>
+                    ${item.pontos} pts
+                </span>
+            </div>
+        `;
+    });
+
+    document.getElementById("ranking").innerHTML = html;
+}
+function fecharRanking() {
+    document.getElementById("ranking").innerHTML = "";
+}
+</script>
+
+</body>
+</html>
