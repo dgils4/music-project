@@ -232,6 +232,17 @@ Não tente “burlar” o sistema — o verdadeiro valor está no aprendizado, n
 
 <h1>Quiz Bíblico Desafios da Fé (ina)</h1>
 
+<div id="timer" style="
+font-size:15px;
+font-weight:bold;
+text-align:center;
+background:#ef4444;
+padding:10px;
+border-radius:20px;
+margin-bottom:15px;">
+⏰ 10:00
+</div>
+
 <div id="quiz-box">
 
     <div class="pergunta-box" id="pergunta"></div>
@@ -323,6 +334,28 @@ if (localStorage.getItem("quizFinalizado")) {
         setTimeout(() => { cliques = 0; }, 2000);
     });
 } else{
+  
+ let tempo = 400; // 10 minutos em segundos
+
+let cronometro = setInterval(() => {
+
+    let min = Math.floor(tempo / 60);
+    let seg = tempo % 60;
+
+    document.getElementById("timer").innerHTML =
+    `⏰ ${String(min).padStart(2,"0")}:${String(seg).padStart(2,"0")}`;
+
+    tempo--;
+
+    if (tempo < 0) {
+        clearInterval(cronometro);
+        alert("⏰ Tempo esgotado!");
+        calcular();
+    }
+
+}, 1000);
+
+
 // PERGUNTAS
 const perguntas = [
 ["Quem ressuscitou ao terceiro dia?", ["Moisés","Jesus Cristo","Pedro","João"], 1],
@@ -388,12 +421,11 @@ let resultadoTexto = "";
 
 async function calcular() {
 
-    let nome = prompt("Digite seu nome:");
+let nome = prompt("Digite seu nome:");
 
-    if (!nome) {
-        alert("Você precisa digitar seu nome!");
-        return;
-    }
+if (!nome || nome.trim() === "") {
+    nome = "Anônimo";
+}
 
     let pontos = 0;
     let detalhes = "";
@@ -405,7 +437,15 @@ async function calcular() {
         let textoPergunta = perguntas[i][0];
         let opcoes = perguntas[i][1];
 
-        if (respostaUsuario === respostaCorreta) {
+      if (respostaUsuario == null) {
+
+detalhes += `
+<p style="color:orange">
+⏰ ${i+1}. Não respondida
+</p>
+`;
+
+} else if (respostaUsuario === respostaCorreta) {
 
             pontos++;
 
