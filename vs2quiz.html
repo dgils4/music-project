@@ -218,9 +218,9 @@ border-radius:20px;
     Responda com atenção antes de finalizar<br><br>
 Este desafio é uma oportunidade de crescimento espiritual.
 Seja honesto em suas respostas.
-Não tente “burlar” o sistema — o verdadeiro valor está no aprendizado, não na pontuação..</p>
+Não tente “burlar” o sistema — o verdadeiro valor está no aprendizado, não na pontuação.</p>
 
-    <button onclick="fecharPopup()">Entendi</button>
+    <button onclick="fecharPopup(),time()">INICIAR</button>
   </div>
 </div>
   
@@ -242,6 +242,8 @@ border-radius:20px;
 margin-bottom:15px;">
 ⏰ 10:00
 </div>
+
+
 
 <div id="quiz-box">
 
@@ -334,8 +336,11 @@ if (localStorage.getItem("quizFinalizado")) {
         setTimeout(() => { cliques = 0; }, 2000);
     });
 } else{
+
   
- let tempo = 400; // 10 minutos em segundos
+function time(){
+
+  let tempo = 400; // 10 minutos em segundos
 
 let cronometro = setInterval(() => {
 
@@ -354,6 +359,7 @@ let cronometro = setInterval(() => {
     }
 
 }, 1000);
+} 
 
 
 // PERGUNTAS
