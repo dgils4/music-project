@@ -355,6 +355,7 @@ function time(){
     if (tempo < 0) {
         clearInterval(cronometro);
         alert("⏰ Tempo esgotado!");
+ new Audio("Audio/tempo.mp3").play();
         calcular();
     }
 
@@ -594,9 +595,9 @@ function proximaPergunta(){
 
  if(marcada == null){
    alert("Escolha uma opção");
-   new Audio("Audio/Corrigir.mp3").play();
+   new Audio("Audio/error.mp3").play();
    return;
- }
+ } else{ new Audio("Audio/Audio3.mp3").play();  }
 
  respostas[atual] = marcada;
 
