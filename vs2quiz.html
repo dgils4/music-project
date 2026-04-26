@@ -592,11 +592,10 @@ function selecionar(i){
 }
 
 function proximaPergunta(){
-
+   const erro = new Audio("Audio/error.mp3");
+    erro.volume = 1.0;
  if(marcada == null){
-   const = erro new Audio("Audio/error.mp3");
-   erro.volume = 1.0;
-   erro.play();
+erro.play();
    alert("Escolha uma opção");
    
    return;
